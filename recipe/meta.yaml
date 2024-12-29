@@ -6,22 +6,22 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 4940a6ccdca7e571d5d4e094acab222adb967d83ca93877354b8396924e79d26
 
 build:
   noarch: python
-  number: 0
+  number: 1
   script: |
     mv setup_datacommons.py setup.py
     {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
-    - python >=2.7.0,<4.0.0
+    - python {{ python_min }}
     - pip
   run:
-    - python >=2.7.0,<4.0.0
+    - python >={{ python_min }},<4.0.0
     - six >=1.11.0,<2.0.0
 
 test:
@@ -29,6 +29,7 @@ test:
     - datacommons
   requires:
     - pip
+    - python {{ python_min }}
   commands:
     - pip check
 
